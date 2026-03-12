@@ -61,7 +61,7 @@ export const peopleGroups: PeopleGroup[] = [
       {
         name: "Lynie Espiel-Bereso, MiM",
         role: "Chairman & Chief Executive Officer (CEO)",
-        bio: "Visionary entrepreneur and transformational leader driving WELLBUILD and PALMYRA with faith-led, community-centered growth.",
+        bio: "Visionary entrepreneur and transformational leader driving WELLBUILD and PALMYRA Siargao with faith-led, community-centered growth.",
         fullBio: "Lynie Espiel-Bereso is a visionary entrepreneur, transformational leader, and faith-driven philanthropist whose life story reflects resilience, purpose, and extraordinary leadership. As the Chairman of the Espiel-Bereso Group of Companies and Chairman, President, and CEO of WELLife Network Marketing Corporation, she has built a dynamic ecosystem of businesses committed to empowering people, strengthening communities, and creating sustainable opportunities for growth.\n\nUnder her leadership, WELLife Network Marketing Corporation experienced remarkable expansion, achieving nearly 200% growth during the global pandemic. Through WELLife, thousands of Filipino families have gained access to eco-friendly wellness products and meaningful livelihood opportunities that promote both health and financial empowerment.\n\nRooted in a deep sense of faith and service, Lynie has dedicated much of her life to humanitarian and community initiatives. Her passion for sharing hope and compassion has led to impactful programs such as Tabang May Buhay, Help Rebuild Homes, and Tabang Kabataan, initiatives that provide assistance to disaster-affected families, rebuild communities, and support disadvantaged children throughout the Philippines.\n\nDriven by a vision to contribute to the country's economic and tourism growth, Lynie founded WELLBUILD Development Corporation in 2025, a real estate development company dedicated to building world-class communities that combine luxury, sustainability, and global standards of design. Its flagship development, PALMYRA Siargao Resort and Residences, is poised to redefine island living as the first luxury mid-rise condominium development in Siargao.\n\nFrom humble beginnings to becoming a respected multi-awarded business leader, Lynie's journey is captured in her book, The Unqualified Leader: Discover the Single Most Important Trait That Can Make Anyone the Best Leader, where she shares how faith and purpose can transform limitations into opportunities and empower others to lead with impact.\n\nToday, Lynie Espiel-Bereso continues to lead with vision, compassion, and unwavering faith, committed to building businesses that not only succeed economically but also uplift communities and transform lives.",
         accolades: [
           "Direct Selling Association of the Philippines - Sales Achiever Award (2012)",
@@ -104,19 +104,19 @@ export const peopleGroups: PeopleGroup[] = [
         slug: "deborah",
       },
       {
-        name: 'Engr. Eglesciano "Boboy" Bereso',
-        role: "Chief Safety & Compliance Officer (CSCO)",
-        bio: "Ensures all construction meets the highest standards of safety and regulatory compliance.",
-        fullBio: "With decades of technical expertise and industrial leadership, Engr. Eglesciano S. Bereso plays a pivotal advisory role in WELLBUILD's infrastructure development. As Director of Safety & Site Compliance, he collaborates with architects and engineers to ensure each project upholds strict safety protocols while staying aligned with WELLBUILD's eco-conscious and community-centered build philosophy.\n\nA former engineer with the Philippine National Oil Company and a veteran in offshore operations, he brings seasoned insight into the complexities of large-scale development. His current enterprise, TC Chemical & Engineering Services, supplies technical solutions across engineering and industrial maintenance sectors.\n\nBeyond construction, Engr. Bereso is a guiding force in financial empowerment—serving as Chairman of WELLServe Credit Cooperative and a board member of WELLife Corporation. His steady hand, technical precision, and unwavering integrity make him a cornerstone of WELLBUILD's foundational leadership.",
+        name: 'Engr. Eglesciano "Boboy" S. Bereso',
+        role: "Chief Safety & Compliance Officer (CSCO) | Senior Technical Advisor",
+        bio: "Highly respected engineering leader ensuring PALMYRA developments meet rigorous safety, compliance, and sustainability standards.",
+        fullBio: "Engr. Eglesciano S. Bereso is a highly respected engineering professional whose career spans decades of technical leadership in industrial engineering, offshore operations, and infrastructure development. At WELLBUILD, he serves as Chief Safety & Compliance Officer (CSCO) and Senior Technical Advisor, providing strategic leadership to ensure that all developments uphold the highest standards of safety, regulatory compliance, and sustainable construction practices.\n\nA former engineer of the Philippine National Oil Company (PNOC), Engr. Bereso gained extensive experience in complex offshore and industrial operations, equipping him with deep technical insight into large-scale engineering systems and project management. His expertise continues to strengthen WELLBUILD's commitment to building resilient, environmentally responsible, and future-ready infrastructure.\n\nHe is also the founder and principal of TC Chemical & Engineering Services, a firm that delivers specialized engineering solutions, technical consultancy, and industrial maintenance services to a diverse range of sectors.\n\nBeyond engineering and construction, Engr. Bereso plays an important role in advancing financial empowerment and cooperative development. He currently serves as Chairman of WELLServe Credit Cooperative and as a Board Member of WELLife Corporation, contributing his leadership to initiatives that promote financial inclusion, economic stability, and community growth.\n\nRecognized for his technical discipline, strategic leadership, and unwavering integrity, Engr. Bereso remains a cornerstone of WELLBUILD's leadership, helping shape projects that combine engineering excellence, safety, sustainability, and social responsibility.",
         leadershipSnapshot: [
-          "Decades of technical expertise in engineering and industrial operations",
-          "Chief Safety & Compliance Officer for WELLBUILD infrastructure delivery",
-          "Founder of TC Chemical & Engineering Services",
+          "Chief Safety & Compliance Officer (CSCO) and Senior Technical Advisor at WELLBUILD",
+          "Former engineer of the Philippine National Oil Company (PNOC) with offshore and industrial operations expertise",
+          "Founder and principal of TC Chemical & Engineering Services",
         ],
         impactFocus: [
-          "Sets site safety and compliance standards with architects and engineers",
-          "Brings PNOC and offshore operations experience to large-scale development decisions",
-          "Supports financial empowerment as Chairman of WELLServe Credit Cooperative",
+          "Provides strategic leadership to keep developments aligned with strict safety, regulatory, and sustainability standards",
+          "Strengthens WELLBUILD's delivery of resilient, environmentally responsible, and future-ready infrastructure",
+          "Advances financial empowerment and cooperative development through WELLServe and WELLife leadership roles",
         ],
         headshot: headshotBoboy,
         slug: "boboy",
