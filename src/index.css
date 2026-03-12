@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+/* Rophylar placeholder — elegant serif fallback until font files are provided */
+@font-face {
+  font-family: 'Rophylar';
+  src: local('Georgia');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+    /* PALMYRA Siargao Brand Tokens */
+    --porcelain: 120 1% 87.5%;
+    --deep-fir: 155 38% 13%;
+    --buttered-rum: 37 52% 41%;
+    --buttered-rum-light: 37 58% 50%;
+
+    --background: 100 14% 96%; /* lighter porcelain */
+    --foreground: var(--deep-fir);
+
+    --card: 0 0% 100%;
+    --card-foreground: var(--deep-fir);
+
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--deep-fir);
+
+    --primary: var(--deep-fir);
+    --primary-foreground: var(--porcelain);
+
+    --secondary: 120 1% 82%;
+    --secondary-foreground: var(--deep-fir);
+
+    --muted: 120 1% 82%;
+    --muted-foreground: 155 15% 40%;
+
+    --accent: var(--buttered-rum);
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 120 2% 80%;
+    --input: 120 2% 80%;
+    --ring: var(--buttered-rum);
+
+    --radius: 0.25rem;
+
+    --sidebar-background: var(--deep-fir);
+    --sidebar-foreground: var(--porcelain);
+    --sidebar-primary: var(--buttered-rum);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 155 30% 18%;
+    --sidebar-accent-foreground: var(--porcelain);
+    --sidebar-border: 155 25% 20%;
+    --sidebar-ring: var(--buttered-rum);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rophylar', 'Georgia', 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer components {
+  .btn-cta-v1 {
+    @apply inline-flex items-center justify-center font-label uppercase tracking-widest border border-buttered-rum bg-buttered-rum text-white transition-all duration-300 hover:bg-porcelain hover:text-buttered-rum hover:border-porcelain;
+  }
+
+  .btn-cta-v1-inverse {
+    @apply inline-flex items-center justify-center font-label uppercase tracking-widest border border-buttered-rum bg-porcelain text-buttered-rum transition-all duration-300 hover:bg-buttered-rum hover:text-white hover:border-buttered-rum;
+  }
+
+  .btn-cta-v2 {
+    @apply inline-flex items-center justify-center font-label uppercase tracking-widest border border-primary bg-primary text-primary-foreground transition-all duration-300 hover:bg-porcelain hover:text-primary hover:border-porcelain;
+  }
+
+  .btn-cta-v2-inverse {
+    @apply inline-flex items-center justify-center font-label uppercase tracking-widest border border-primary/45 bg-transparent text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:border-primary;
+  }
+
+  .btn-cta-dark-secondary {
+    @apply inline-flex items-center justify-center font-label uppercase tracking-widest border border-porcelain/65 bg-transparent text-porcelain transition-all duration-300 hover:bg-porcelain hover:text-primary hover:border-porcelain;
+  }
+}
+
+@layer utilities {
+  @keyframes scroll-cue-line {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0.4;
+    }
+    50% {
+      transform: translateY(9px);
+      opacity: 1;
+    }
+  }
+
+  .animate-scroll-cue {
+    animation: scroll-cue-line 1.55s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll-cue {
+      animation: none;
+    }
+  }
+
+  .font-heading {
+    font-family: 'Rophylar', 'Georgia', 'Times New Roman', serif;
+  }
+  .font-subhead {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+  }
+  .font-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+  }
+  .font-body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+  }
+}
