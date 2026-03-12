@@ -17,9 +17,13 @@ type FormValues = {
   phone: string;
   organization: string;
   message: string;
+  website: string;
 };
 
 type FormErrors = Partial<Record<keyof FormValues, string>>;
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const initialValues: FormValues = {
   name: "",
@@ -27,6 +31,7 @@ const initialValues: FormValues = {
   phone: "",
   organization: "",
   message: "",
+  website: "",
 };
 
 const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormProps) => {
@@ -82,7 +87,7 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
     setSubmitted(false);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) {
       toast({
@@ -92,18 +97,55 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
       return;
     }
 
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      toast({
+        title: "Configuration missing",
+        description: "Form service is not configured. Please contact the site admin.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSubmitting(true);
-    setTimeout(() => {
+    try {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-contact-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          ...values,
+          formType,
+        }),
+      });
+
+      const payload = (await response.json().catch(() => ({}))) as { error?: string };
+      if (!response.ok) {
+        throw new Error(payload.error || "Your message could not be sent right now.");
+      }
+
       toast({
         title: "Thank you",
         description: formType === "investor"
           ? "We've received your request. Our team will share the investor brief shortly."
           : "We've received your message. Someone from our team will be in touch soon.",
       });
-      setSubmitting(false);
       setSubmitted(true);
       setValues(initialValues);
-    }, 600);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: "Something went wrong",
+        description: error instanceof Error
+          ? error.message
+          : "Your message could not be sent. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -236,6 +278,19 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
               onChange={(e) => setFieldValue("message", e.target.value)}
             />
             {errors.message ? <p className="mt-1 text-xs text-destructive">{errors.message}</p> : null}
+          </div>
+
+          {/* Hidden honeypot field for bot detection */}
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor={`${idPrefix}-website`} className="sr-only">Website</Label>
+            <Input
+              id={`${idPrefix}-website`}
+              name="website"
+              autoComplete="off"
+              tabIndex={-1}
+              value={values.website}
+              onChange={(e) => setFieldValue("website", e.target.value)}
+            />
           </div>
 
           <Button
