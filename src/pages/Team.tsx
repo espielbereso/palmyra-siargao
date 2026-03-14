@@ -10,7 +10,7 @@ import orgChartImage from "@/assets/pages/team/wdc-palmyra-org-chart.png";
 // Partner logo imports
 import logoWellbuild from "@/assets/pages/team/partners/wellbuild-logo.png";
 import logoRbcatubig from "@/assets/pages/team/partners/rbcatubig-architects-logo.png";
-import logoLopo from "@/assets/pages/team/partners/lopo-ortega-and-co-cpa-logo.jpg";
+import logoLopo from "@/assets/pages/team/partners/lopo-ortega-and-co-cpa-logo.webp";
 
 
 const groupIcons: Record<string, LucideIcon> = {

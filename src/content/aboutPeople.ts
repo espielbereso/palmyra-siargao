@@ -10,7 +10,7 @@ import headshotAlain from "@/assets/pages/team/headshots/alain-de-leon.webp";
 import headshotDavid from "@/assets/pages/team/headshots/david-moore.webp";
 import headshotRyan from "@/assets/pages/team/headshots/ryan-catubig.webp";
 import headshotJohn from "@/assets/pages/team/headshots/john-lopo.webp";
-import headshotTorreon from "@/assets/pages/team/headshots/torreon.jpg";
+import headshotTorreon from "@/assets/pages/team/headshots/torreon.webp";
 
 export type Person = {
   name: string;
