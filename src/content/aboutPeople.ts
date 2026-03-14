@@ -10,7 +10,7 @@ import headshotAlain from "@/assets/pages/team/headshots/alain-de-leon.webp";
 import headshotDavid from "@/assets/pages/team/headshots/david-moore.webp";
 import headshotRyan from "@/assets/pages/team/headshots/ryan-catubig.webp";
 import headshotJohn from "@/assets/pages/team/headshots/john-lopo.webp";
-import headshotRafael from "@/assets/pages/team/headshots/rafael-yango.webp";
+import headshotTorreon from "@/assets/pages/team/headshots/torreon.jpg";
 
 export type Person = {
   name: string;
@@ -327,21 +327,23 @@ export const peopleGroups: PeopleGroup[] = [
         slug: "john",
       },
       {
-        name: "Attorney Rafael G. Yango",
-        role: "In-House Counsel, Bereso Group of Companies",
-        bio: "Supports legal and governance alignment for partner entities and project-related frameworks.",
+        name: "Atty. Israelito P. Torreon",
+        role: "Founder, Torreon & Partners | Legal Counsel for WELLBUILD Development Corporation",
+        bio: "Provides legal counsel guiding compliance, risk management, and smooth project execution for WELLBUILD.",
+        fullBio:
+          "The Law Firm of Torreon & Partners, led by its founder Atty. Israelito P. Torreon, serves as the legal counsel for WELLBUILD Development Corporation. Recognized as a prominent and highly respected lawyer in the Philippines, Atty. Torreon provides expert legal guidance to ensure the project's compliance, risk management, and smooth execution from inception to completion.",
         leadershipSnapshot: [
-          "In-house counsel for Bereso Group of Companies",
-          "Supports legal strategy across corporate and project-level matters",
-          "Advises on governance, compliance, and risk alignment",
+          "Founder of The Law Firm of Torreon & Partners",
+          "Legal counsel for WELLBUILD Development Corporation",
+          "Prominent and highly respected lawyer in the Philippines",
         ],
         impactFocus: [
-          "Strengthens legal due diligence for partnerships and contracts",
-          "Helps align project frameworks with regulatory and corporate requirements",
-          "Supports disciplined governance across PALMYRA-related entities",
+          "Guides project compliance from inception to completion",
+          "Strengthens legal risk management across WELLBUILD initiatives",
+          "Supports smooth execution through disciplined legal oversight",
         ],
-        headshot: headshotRafael,
-        slug: "rafael",
+        headshot: headshotTorreon,
+        slug: "torreon",
       },
     ],
   },
