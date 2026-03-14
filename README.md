@@ -74,6 +74,14 @@ npm run preview
 - Build command: `npm run build`
 - Publish directory: `dist`
 - Add the same `VITE_*` variables in Netlify site settings.
+- Keep social preview tags in [`index.html`](./index.html) aligned with the live domain and share image.
+
+## Social link previews
+
+- Facebook Messenger, Telegram, Slack, and similar apps use Open Graph metadata to build link previews.
+- This site's preview image is served from [`public/og-image.jpg`](./public/og-image.jpg) and referenced in [`index.html`](./index.html).
+- If the production domain changes, update the canonical URL plus `og:url`, `og:image`, and `twitter:image` to the new absolute URL.
+- Because this is a static Vite SPA, these tags are global for the site. Route-specific previews would require prerendering or SSR.
 
 ## Security notes
 
