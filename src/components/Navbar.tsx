@@ -37,7 +37,7 @@ const Navbar = () => {
       return location.pathname === "/about" || location.pathname === "/story";
     }
     if (path === "/updates") {
-      return location.pathname === "/updates" || location.pathname === "/invest";
+      return location.pathname === "/updates";
     }
     return location.pathname === path;
   };

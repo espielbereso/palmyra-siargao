@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SeoManager from "@/components/SeoManager";
 import Home from "./pages/Index";
 import About from "./pages/About";
 import Team from "./pages/Team";
@@ -34,6 +35,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <SeoManager />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -43,7 +45,6 @@ const App = () => (
           <Route path="/story" element={<Navigate to="/about" replace />} />
           <Route path="/residences" element={<Residences />} />
           <Route path="/updates" element={<Updates />} />
-          <Route path="/invest" element={<Updates />} />
           <Route path="/connect" element={<Connect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
