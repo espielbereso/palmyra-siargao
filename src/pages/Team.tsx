@@ -10,7 +10,8 @@ import orgChartImage from "@/assets/pages/team/wdc-palmyra-org-chart.png";
 // Partner logo imports
 import logoWellbuild from "@/assets/pages/team/partners/wellbuild-logo.png";
 import logoRbcatubig from "@/assets/pages/team/partners/rbcatubig-architects-logo.png";
-import logoLopo from "@/assets/pages/team/partners/lopo-ortega-and-co-cpa-logo.webp";
+import logoLopo from "@/assets/pages/team/partners/lopo-ortega-and-co-cpa-logo-horizontal.webp";
+import logoTorreonLaw from "@/assets/pages/team/partners/torreon-law-horizontal.webp";
 
 
 const groupIcons: Record<string, LucideIcon> = {
@@ -25,6 +26,7 @@ const partnerLogoMap: Record<string, string> = {
   "WELLBUILD Development Corporation": logoWellbuild,
   "RBCatubig Architects": logoRbcatubig,
   "Lopo, Ortega and Co., CPA": logoLopo,
+  "The Law Firm of Torreon and Partners": logoTorreonLaw,
 };
 
 const Team = () => {
@@ -97,55 +99,60 @@ const Team = () => {
               Key organizations involved in project delivery
             </h2>
             <p className="font-body text-lg md:text-xl text-primary-foreground/75 leading-relaxed max-w-3xl mb-14">
-              PALMYRA Siargao is delivered through trusted partners across development, architecture, planning, and financial oversight.
+              PALMYRA Siargao is delivered through trusted partners across development, architecture, planning, financial stewardship, and legal oversight.
             </p>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {partnerCompanies.map((company, index) => (
-              <ScrollReveal key={company.name} delay={index * 0.05}>
-                <article className="h-full border border-primary-foreground/20 bg-primary-foreground/[0.04] p-6 flex flex-col">
-                  <div className="mb-6 h-32 md:h-36 px-1 md:px-2 flex items-center justify-center">
-                    {partnerLogoMap[company.name] ? (
-                      <img
-                        src={partnerLogoMap[company.name]}
-                        alt={`${company.name} logo`}
-                        className="h-full w-full object-contain"
-                        loading="lazy"
-                      />
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {partnerCompanies.map((company, index) => {
+              const ctaLabel = company.ctaLabel ?? "VISIT WEBSITE";
+              const isExternalWebsite = Boolean(company.website && /^https?:\/\//.test(company.website));
+
+              return (
+                <ScrollReveal key={company.name} delay={index * 0.05}>
+                  <article className="h-full border border-primary-foreground/20 bg-primary-foreground/[0.04] p-6 flex flex-col">
+                    <div className="mb-6 h-32 md:h-36 px-1 md:px-2 flex items-center justify-center">
+                      {partnerLogoMap[company.name] ? (
+                        <img
+                          src={partnerLogoMap[company.name]}
+                          alt={`${company.name} logo`}
+                          className="h-full w-full object-contain"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span className="font-label text-[10px] uppercase tracking-[0.18em] text-primary/60">
+                          Logo Coming Soon
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-xl leading-tight mb-2">{company.name}</h3>
+                    <p className="font-label text-xs uppercase tracking-widest text-[hsl(var(--buttered-rum-light))] mb-4">
+                      {company.role}
+                    </p>
+                    <p className="font-body text-sm text-primary-foreground/75 leading-relaxed mb-6 min-h-[66px]">
+                      {company.description}
+                    </p>
+                    {company.website ? (
+                      <a
+                        href={company.website}
+                        target={isExternalWebsite ? "_blank" : undefined}
+                        rel={isExternalWebsite ? "noreferrer" : undefined}
+                        className="inline-block mt-auto font-label text-xs text-center uppercase tracking-widest border border-primary-foreground/30 px-4 py-2 hover:bg-primary-foreground hover:text-primary transition-all duration-300"
+                      >
+                        {ctaLabel}
+                      </a>
                     ) : (
-                      <span className="font-label text-[10px] uppercase tracking-[0.18em] text-primary/60">
-                        Logo Coming Soon
-                      </span>
+                      <Link
+                        to="/connect"
+                        className="inline-block mt-auto font-label text-xs uppercase tracking-widest border border-primary-foreground/30 px-4 py-2 hover:bg-primary-foreground hover:text-primary transition-all duration-300"
+                      >
+                        {ctaLabel}
+                      </Link>
                     )}
-                  </div>
-                  <h3 className="text-xl leading-tight mb-2">{company.name}</h3>
-                  <p className="font-label text-xs uppercase tracking-widest text-[hsl(var(--buttered-rum-light))] mb-4">
-                    {company.role}
-                  </p>
-                  <p className="font-body text-sm text-primary-foreground/75 leading-relaxed mb-6 min-h-[66px]">
-                    {company.description}
-                  </p>
-                  {company.website ? (
-                    <a
-                      href={company.website}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-block mt-auto font-label text-xs text-center uppercase tracking-widest border border-primary-foreground/30 px-4 py-2 hover:bg-primary-foreground hover:text-primary transition-all duration-300"
-                    >
-                      VISIT WEBSITE
-                    </a>
-                  ) : (
-                    <Link
-                      to="/connect"
-                      className="inline-block mt-auto font-label text-xs uppercase tracking-widest border border-primary-foreground/30 px-4 py-2 hover:bg-primary-foreground hover:text-primary transition-all duration-300"
-                    >
-                      VISIT WEBSITE
-                    </Link>
-                  )}
-                </article>
-              </ScrollReveal>
-            ))}
+                  </article>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>

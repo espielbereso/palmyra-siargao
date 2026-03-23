@@ -36,6 +36,7 @@ export type PartnerCompany = {
   role: string;
   description: string;
   website?: string;
+  ctaLabel?: string;
 };
 
 export const getInitials = (name: string) => {
@@ -387,5 +388,13 @@ export const partnerCompanies: PartnerCompany[] = [
     description:
       "Supports financial, accounting, and audit-aligned project disciplines.",
     website: "https://www.facebook.com/ConversationsbyStrivedExecutiveAsia/",
+  },
+  {
+    name: "The Law Firm of Torreon and Partners",
+    role: "Legal Counsel Partner",
+    description:
+      "Provides legal representation across litigation, corporate, labor, employment, intellectual property, and real estate matters to support compliant, risk-aware project delivery.",
+    website: "https://www.facebook.com/torreonlawph",
+    ctaLabel: "Visit website",
   },
 ];
