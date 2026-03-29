@@ -330,18 +330,18 @@ export const peopleGroups: PeopleGroup[] = [
       {
         name: "Atty. Israelito P. Torreon",
         role: "Founder, Torreon & Partners | Legal Counsel for WELLBUILD Development Corporation",
-        bio: "Provides legal counsel guiding compliance, risk management, and smooth project execution for WELLBUILD.",
+        bio: "Founding partner and veteran trial lawyer leading legal strategy, compliance, and risk management for WELLBUILD.",
         fullBio:
-          "The Law Firm of Torreon & Partners, led by its founder Atty. Israelito P. Torreon, serves as the legal counsel for WELLBUILD Development Corporation. Recognized as a prominent and highly respected lawyer in the Philippines, Atty. Torreon provides expert legal guidance to ensure the project's compliance, risk management, and smooth execution from inception to completion.",
+          "Atty. Israelito P. Torreon is the Founding Partner of The Law Firm of Torreon and Partners and legal counsel for WELLBUILD Development Corporation. He passed the bar and took his oath as a lawyer on May 6, 1998, then established Torreon Law Firm in May 2000. Since then, he has led the firm in handling high-stakes criminal, civil, constitutional, election, and corporate disputes, with appearances spanning trial courts, appellate courts, and the Supreme Court.\n\nUnder his leadership, the firm has been involved in nationally significant litigation, including Province of North Cotabato v. GRP Peace Panel on Ancestral Domain (2008), Catamco v. Sandiganbayan (2020), Pe\u00f1as v. COMELEC (2022), and Duterte v. House of Representatives (2025), where the Supreme Court referenced the pleading as the \"Torreon Petition.\" He also served as counsel in the Maguindanao Massacre trials and in major injunction and property rights disputes in Mindanao.\n\nBeyond litigation practice, Atty. Torreon has held key leadership and academic posts, including President of the IBP Davao del Sur chapter (two terms), Vice President (three terms), Governor for IBP Eastern Mindanao (one term), former law professor at Ateneo de Davao University (1999-2010), former Law Dean of Cor Jesu College of Law (2010-2016), and current Dean of Jose Maria College of Law.",
         leadershipSnapshot: [
-          "Founder of The Law Firm of Torreon & Partners",
-          "Legal counsel for WELLBUILD Development Corporation",
-          "Prominent and highly respected lawyer in the Philippines",
+          "Passed the Philippine Bar and took oath as lawyer on May 6, 1998; founded Torreon Law Firm in May 2000",
+          "Founding Partner of The Law Firm of Torreon and Partners and legal counsel for WELLBUILD Development Corporation",
+          "Former IBP Davao del Sur President and IBP Eastern Mindanao Governor; current Dean of Jose Maria College of Law",
         ],
         impactFocus: [
-          "Guides project compliance from inception to completion",
-          "Strengthens legal risk management across WELLBUILD initiatives",
-          "Supports smooth execution through disciplined legal oversight",
+          "Leads end-to-end legal strategy for compliance, risk management, and defensible project execution",
+          "Handles complex, high-profile litigation and constitutional disputes before Philippine courts",
+          "Combines courtroom leadership with legal education and professional governance through IBP and law school roles",
         ],
         headshot: headshotTorreon,
         slug: "torreon",
