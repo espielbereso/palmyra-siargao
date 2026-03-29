@@ -1,7 +1,8 @@
 https://palmyra-siargao.com/* https://palmyrasiargao.com/:splat 301!
 https://www.palmyra-siargao.com/* https://palmyrasiargao.com/:splat 301!
 https://www.palmyrasiargao.com/* https://palmyrasiargao.com/:splat 301!
-/updates 301
+/invest /updates 301
+/meet-the-team /team 301
 /story /about 301
 
 /* /index.html 200
