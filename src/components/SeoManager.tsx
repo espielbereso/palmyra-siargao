@@ -20,6 +20,109 @@ type BreadcrumbItem = {
 const SITE_URL = "https://palmyrasiargao.com";
 const SITE_NAME = "PALMYRA Siargao";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+const DEFAULT_IMAGE_ALT =
+  "PALMYRA Siargao island sanctuary residences in Del Carmen, Siargao";
+const PROJECT_DESCRIPTION =
+  "PALMYRA Siargao is a conscious island sanctuary and integrated resort-residence project in Barangay Cancohoy, Del Carmen, Siargao Island, Philippines. It is a project of WELLBUILD Development Corporation.";
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+  name: SITE_NAME,
+  alternateName: [
+    "PALMYRA Siargao Resort and Residences",
+    "PALMYRA Siargao Residences",
+  ],
+  url: `${SITE_URL}/`,
+  logo: `${SITE_URL}/og-image.jpg`,
+  description: PROJECT_DESCRIPTION,
+  parentOrganization: {
+    "@type": "Organization",
+    name: "WELLBUILD Development Corporation",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "Project inquiries",
+    url: `${SITE_URL}/connect`,
+    areaServed: "PH",
+    availableLanguage: ["en"],
+  },
+};
+
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "Resort",
+  "@id": `${SITE_URL}/#project`,
+  name: "PALMYRA Siargao Resort and Residences",
+  alternateName: ["PALMYRA Siargao", "PALMYRA Siargao Residences"],
+  url: `${SITE_URL}/`,
+  image: DEFAULT_OG_IMAGE,
+  description: PROJECT_DESCRIPTION,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Barangay Cancohoy",
+    addressLocality: "Del Carmen",
+    addressRegion: "Surigao del Norte",
+    addressCountry: "PH",
+  },
+  containedInPlace: {
+    "@type": "Place",
+    name: "Siargao Island",
+    address: {
+      "@type": "PostalAddress",
+      addressRegion: "Surigao del Norte",
+      addressCountry: "PH",
+    },
+  },
+  parentOrganization: {
+    "@id": `${SITE_URL}/#organization`,
+  },
+  amenityFeature: [
+    {
+      "@type": "LocationFeatureSpecification",
+      name: "Low-rise residences",
+      value: true,
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      name: "Pools and wellness decks",
+      value: true,
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      name: "Clubhouse and social lounges",
+      value: true,
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      name: "Food village and dining concepts",
+      value: true,
+    },
+  ],
+  keywords: [
+    "Siargao residences",
+    "Del Carmen resort residences",
+    "PALMYRA Siargao",
+    "WELLBUILD Development Corporation",
+    "integrated resort and residences",
+  ],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: SITE_NAME,
+  url: `${SITE_URL}/`,
+  inLanguage: "en",
+  publisher: {
+    "@id": `${SITE_URL}/#organization`,
+  },
+  about: {
+    "@id": `${SITE_URL}/#project`,
+  },
+};
 
 const membersBySlug = peopleGroups
   .flatMap((group) => group.people)
@@ -35,9 +138,9 @@ const getAbsoluteUrl = (path: string) =>
 const getMetaForRoute = (pathname: string, search: string): SeoMeta => {
   if (pathname === "/") {
     return {
-      title: "PALMYRA Siargao | Luxury Island Sanctuary Residences",
+      title: "PALMYRA Siargao | Resort and Residences in Del Carmen",
       description:
-        "Discover PALMYRA Siargao, a conscious island sanctuary of luxury residences in Del Carmen, Siargao Island, Philippines.",
+        "Discover PALMYRA Siargao, a conscious island sanctuary and integrated resort-residence project in Del Carmen, Siargao Island, Philippines.",
       canonicalPath: "/",
       type: "website",
     };
@@ -105,9 +208,9 @@ const getMetaForRoute = (pathname: string, search: string): SeoMeta => {
 
   if (pathname === "/residences") {
     return {
-      title: "Residences | PALMYRA Siargao",
+      title: "Residences | PALMYRA Siargao Resort and Residences",
       description:
-        "Explore PALMYRA Siargao residences, unit types, amenities, and project highlights for refined tropical island living.",
+        "Explore PALMYRA Siargao residences, unit types, amenities, site highlights, and phased plans for refined tropical island living in Del Carmen.",
       canonicalPath: "/residences",
       type: "article",
     };
@@ -226,10 +329,23 @@ const SeoManager = () => {
     upsertCanonical(canonicalUrl);
 
     upsertMeta("name", "description", meta.description);
-    upsertMeta("name", "robots", meta.noindex ? "noindex, nofollow" : "index, follow");
-    upsertMeta("name", "googlebot", meta.noindex ? "noindex, nofollow" : "index, follow");
+    upsertMeta(
+      "name",
+      "robots",
+      meta.noindex
+        ? "noindex, follow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    );
+    upsertMeta(
+      "name",
+      "googlebot",
+      meta.noindex
+        ? "noindex, follow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    );
 
     upsertMeta("property", "og:type", meta.type);
+    upsertMeta("property", "og:locale", "en_US");
     upsertMeta("property", "og:site_name", SITE_NAME);
     upsertMeta("property", "og:url", canonicalUrl);
     upsertMeta("property", "og:title", meta.title);
@@ -239,34 +355,36 @@ const SeoManager = () => {
     upsertMeta("property", "og:image:type", "image/jpeg");
     upsertMeta("property", "og:image:width", "1200");
     upsertMeta("property", "og:image:height", "630");
-    upsertMeta(
-      "property",
-      "og:image:alt",
-      "PALMYRA Siargao island sanctuary residences",
-    );
+    upsertMeta("property", "og:image:alt", DEFAULT_IMAGE_ALT);
 
     upsertMeta("name", "twitter:card", "summary_large_image");
+    upsertMeta("name", "twitter:domain", "palmyrasiargao.com");
     upsertMeta("name", "twitter:title", meta.title);
     upsertMeta("name", "twitter:description", meta.description);
     upsertMeta("name", "twitter:image", DEFAULT_OG_IMAGE);
-    upsertMeta(
-      "name",
-      "twitter:image:alt",
-      "PALMYRA Siargao island sanctuary residences",
-    );
+    upsertMeta("name", "twitter:image:alt", DEFAULT_IMAGE_ALT);
 
     const breadcrumbItems = getBreadcrumbs(location.pathname);
     const commonSchema: Record<string, unknown>[] = [
+      organizationSchema,
+      projectSchema,
+      websiteSchema,
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
+        "@id": `${canonicalUrl}#webpage`,
         name: meta.title,
         description: meta.description,
         url: canonicalUrl,
+        inLanguage: "en",
         isPartOf: {
-          "@type": "WebSite",
-          name: SITE_NAME,
-          url: SITE_URL,
+          "@id": `${SITE_URL}/#website`,
+        },
+        about: {
+          "@id": `${SITE_URL}/#project`,
+        },
+        publisher: {
+          "@id": `${SITE_URL}/#organization`,
         },
       },
     ];

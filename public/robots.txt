@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /sitemap.xml
 
 Sitemap: https://palmyrasiargao.com/sitemap.xml

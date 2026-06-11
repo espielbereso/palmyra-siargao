@@ -5,4 +5,4 @@ https://www.palmyrasiargao.com/* https://palmyrasiargao.com/:splat 301!
 /meet-the-team /team 301
 /story /about 301
 
-/* /index.html 200
+/* /404.html 404

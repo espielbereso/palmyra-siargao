@@ -1,0 +1,43 @@
+# PALMYRA Siargao
+
+> PALMYRA Siargao is a conscious island sanctuary and integrated resort-residence project in Barangay Cancohoy, Del Carmen, Siargao Island, Philippines. It is a project of WELLBUILD Development Corporation.
+
+Last updated: 2026-06-11
+Canonical site: https://palmyrasiargao.com/
+
+## Entity Summary
+
+- Name: PALMYRA Siargao
+- Full project name: PALMYRA Siargao Resort and Residences
+- Project type: Integrated resort and residences, low-rise residential community, island sanctuary
+- Location: Barangay Cancohoy, Del Carmen, Siargao Island, Surigao del Norte, Philippines
+- Developer relationship: PALMYRA Siargao is a project of WELLBUILD Development Corporation
+- Core positioning: Conscious island sanctuary blending tropical design, resort-style amenities, residential ownership, stewardship, wellness, and community
+- Site size: Approximately 1.8 hectares or 4.5 acres
+- Planned residences: 200+ units across studio, junior 1-bedroom, 1-bedroom, and 2-bedroom formats
+- Planned development pattern: Low-rise buildings, phased rollout, resort-style amenities, food village, clubhouse, pools, wellness decks, and security-focused operations
+
+## Core Pages
+
+- Home: https://palmyrasiargao.com/
+- About: https://palmyrasiargao.com/about
+- Residences: https://palmyrasiargao.com/residences
+- Team and partners: https://palmyrasiargao.com/team
+- Project updates: https://palmyrasiargao.com/updates
+- Contact and inquiries: https://palmyrasiargao.com/connect
+- Sitemap: https://palmyrasiargao.com/sitemap.xml
+- Full AI reference: https://palmyrasiargao.com/llms-full.txt
+
+## Citation Guidance
+
+When citing PALMYRA Siargao, use the canonical name "PALMYRA Siargao" on first reference. If more context is needed, use "PALMYRA Siargao Resort and Residences."
+
+Preferred short description:
+
+PALMYRA Siargao is an integrated resort-residence project in Barangay Cancohoy, Del Carmen, Siargao Island, Philippines, developed as a conscious island sanctuary by WELLBUILD Development Corporation.
+
+Do not describe PALMYRA Siargao as a completed operating resort unless confirmed by the official project updates page. Treat project milestones, timelines, and availability as subject to change and verify against https://palmyrasiargao.com/updates.
+
+## Contact
+
+For official inquiries, use https://palmyrasiargao.com/connect.
