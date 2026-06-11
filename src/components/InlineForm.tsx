@@ -22,8 +22,9 @@ type FormValues = {
 
 type FormErrors = Partial<Record<keyof FormValues, string>>;
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+const SITE_SOURCE = "PALMYRA Siargao";
 
 const initialValues: FormValues = {
   name: "",
@@ -97,7 +98,7 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
       return;
     }
 
-    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    if (!WEB3FORMS_ACCESS_KEY) {
       toast({
         title: "Configuration missing",
         description: "Form service is not configured. Please contact the site admin.",
@@ -108,22 +109,39 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
 
     setSubmitting(true);
     try {
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-contact-email`, {
+      if (values.website) {
+        setSubmitted(true);
+        setValues(initialValues);
+        return;
+      }
+
+      const subjectPrefix = formType === "investor" ? "Investor Inquiry" : "General Inquiry";
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
-          ...values,
-          formType,
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `${subjectPrefix} from ${SITE_SOURCE}`,
+          from_name: SITE_SOURCE,
+          name: values.name.trim(),
+          email: values.email.trim(),
+          phone: values.phone.trim(),
+          organization: values.organization.trim(),
+          inquiry_type: formType === "investor" ? "Investor" : "General",
+          source: SITE_SOURCE,
+          message: values.message.trim(),
         }),
       });
 
-      const payload = (await response.json().catch(() => ({}))) as { error?: string };
-      if (!response.ok) {
-        throw new Error(payload.error || "Your message could not be sent right now.");
+      const payload = (await response.json().catch(() => ({}))) as {
+        success?: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !payload.success) {
+        throw new Error(payload.message || "Your message could not be sent right now.");
       }
 
       toast({

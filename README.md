@@ -1,18 +1,16 @@
-# Palmyra Siargao Frontend + Contact Backend
+# Palmyra Siargao Frontend
 
 Standalone frontend built with Vite + React + TypeScript + Tailwind CSS.
 
-The contact form backend uses:
-- Supabase Edge Function (`send-contact-email`)
-- Resend (email delivery)
-- Rate limit + honeypot + origin allowlist (bot/spam protection baseline)
+The contact form uses Web3Forms for email delivery. There is no dedicated backend
+server for inquiries.
 
 ## Architecture
 
 1. User submits the React form.
-2. Frontend sends payload to Supabase Edge Function.
-3. Edge Function validates input, applies rate limit/honeypot/origin checks, and triggers Resend.
-4. Team receives inquiry email (optional auto-reply can also be enabled).
+2. Frontend validates required fields and applies a hidden honeypot check.
+3. Frontend sends the inquiry to Web3Forms.
+4. Team receives the inquiry email at the address configured in Web3Forms.
 
 ## Local frontend development
 
@@ -27,40 +25,19 @@ npm run dev
 Set in `.env` (local) and in Netlify environment settings (production):
 
 ```bash
-VITE_SUPABASE_URL="https://your-project-ref.supabase.co"
-VITE_SUPABASE_ANON_KEY="your-anon-key"
+VITE_WEB3FORMS_ACCESS_KEY="your_web3forms_access_key"
 ```
 
-## Supabase backend setup
+## Web3Forms setup
 
-1. Create a new Supabase project.
-2. Put your project ref in `supabase/config.toml` (`project_id`).
-3. Login and link project:
+1. Create or log in to a Web3Forms account.
+2. Add the receiving email address: `wellbuilddevelopment@gmail.com`.
+3. Copy the Web3Forms access key.
+4. Add the key to local `.env` and to the production host environment variables.
+5. Redeploy the site.
 
-```sh
-supabase login
-supabase link --project-ref your-project-ref
-```
-
-4. Set edge function secrets:
-
-```sh
-supabase secrets set \
-  RESEND_API_KEY=your_resend_api_key \
-  CONTACT_TO_EMAIL=team@yourdomain.com \
-  CONTACT_FROM_EMAIL="PALMYRA Siargao <hello@yourdomain.com>" \
-  ALLOWED_ORIGINS="https://your-domain.com,https://your-site.netlify.app" \
-  REQUIRE_TURNSTILE=false \
-  RATE_LIMIT_MAX_REQUESTS=5 \
-  RATE_LIMIT_WINDOW_SECONDS=600 \
-  ENABLE_AUTOREPLY=false
-```
-
-5. Deploy function:
-
-```sh
-supabase functions deploy send-contact-email
-```
+The form sends a `source` field with `PALMYRA Siargao`, so the same receiving
+email can be reused later for Wellbuild without mixing up inquiry origins.
 
 ## Build and preview
 
@@ -73,7 +50,7 @@ npm run preview
 
 - Build command: `npm run build`
 - Publish directory: `dist`
-- Add the same `VITE_*` variables in Netlify site settings.
+- Add `VITE_WEB3FORMS_ACCESS_KEY` in Netlify site settings.
 - Keep social preview tags in [`index.html`](./index.html) aligned with the live domain and share image.
 
 ## Social link previews
@@ -85,14 +62,8 @@ npm run preview
 
 ## Security notes
 
-- Keep `RESEND_API_KEY` and all backend secrets only in Supabase secrets.
-- Do not expose secrets with `VITE_*`.
-- Keep `ALLOWED_ORIGINS` restricted to your real domains.
-
-## TODO (Recommended soon)
-
-- Enable Cloudflare Turnstile before traffic increases or if spam appears.
-- When enabling:
-  - Add `VITE_TURNSTILE_SITE_KEY` to frontend environment.
-  - Set `TURNSTILE_SECRET_KEY` in Supabase secrets.
-  - Set `REQUIRE_TURNSTILE=true`.
+- Web3Forms access keys are intended for frontend form submissions, but still
+  restrict the form to the real production domains in the Web3Forms dashboard
+  when available.
+- Keep the hidden honeypot field in place.
+- If spam increases, enable hCaptcha or Cloudflare Turnstile from Web3Forms.
