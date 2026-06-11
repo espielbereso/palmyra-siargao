@@ -320,7 +320,12 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
           </div>
 
           <div>
-            <Label htmlFor={`${idPrefix}-message`} className={isFooter ? "text-primary-foreground/70" : ""}>Message *</Label>
+            <div className="mb-1 flex items-center justify-between gap-4">
+              <Label htmlFor={`${idPrefix}-message`} className={isFooter ? "text-primary-foreground/70" : ""}>Message *</Label>
+              <p className={`shrink-0 text-xs ${isFooter ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
+                {values.message.length}/{MAX_MESSAGE_LENGTH.toLocaleString()}
+              </p>
+            </div>
             <Textarea
               id={`${idPrefix}-message`}
               name="message"
@@ -333,18 +338,13 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
               aria-describedby={errors.message ? `${idPrefix}-message-error` : `${idPrefix}-message-help`}
               onChange={(e) => setFieldValue("message", e.target.value)}
             />
-            <div className="mt-1 flex items-start justify-between gap-4">
-              {errors.message ? (
-                <p id={`${idPrefix}-message-error`} className="text-xs text-destructive">{errors.message}</p>
-              ) : (
-                <p id={`${idPrefix}-message-help`} className={`text-xs ${isFooter ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
-                  Include preferred unit type, travel dates, or investment questions if relevant.
-                </p>
-              )}
-              <p className={`shrink-0 text-xs ${isFooter ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
-                {values.message.length}/{MAX_MESSAGE_LENGTH.toLocaleString()}
+            {errors.message ? (
+              <p id={`${idPrefix}-message-error`} className="mt-1 text-xs text-destructive">{errors.message}</p>
+            ) : (
+              <p id={`${idPrefix}-message-help`} className={`mt-1 text-xs ${isFooter ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
+                Include preferred unit type, travel dates, or investment questions if relevant.
               </p>
-            </div>
+            )}
           </div>
 
           {/* Hidden honeypot field for bot detection */}
