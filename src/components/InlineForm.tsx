@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2, Send } from "lucide-react";
 
 interface InlineFormProps {
   variant?: "footer" | "page";
@@ -25,6 +25,7 @@ type FormErrors = Partial<Record<keyof FormValues, string>>;
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 const SITE_SOURCE = "PALMYRA Siargao";
+const MAX_MESSAGE_LENGTH = 5000;
 
 const initialValues: FormValues = {
   name: "",
@@ -73,10 +74,15 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!values.name.trim()) nextErrors.name = "Name is required.";
+    else if (values.name.trim().length > 200) nextErrors.name = "Name is too long.";
     if (!values.email.trim()) nextErrors.email = "Email is required.";
     else if (!emailPattern.test(values.email.trim())) nextErrors.email = "Enter a valid email address.";
+    else if (values.email.trim().length > 320) nextErrors.email = "Email is too long.";
+    if (values.phone.trim().length > 30) nextErrors.phone = "Phone number is too long.";
+    if (values.organization.trim().length > 200) nextErrors.organization = "Organization name is too long.";
     if (!values.message.trim()) nextErrors.message = "Message is required.";
     else if (values.message.trim().length < 12) nextErrors.message = "Please add a bit more detail (at least 12 characters).";
+    else if (values.message.trim().length > MAX_MESSAGE_LENGTH) nextErrors.message = `Message must be ${MAX_MESSAGE_LENGTH.toLocaleString()} characters or fewer.`;
 
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
@@ -116,23 +122,32 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
       }
 
       const subjectPrefix = formType === "investor" ? "Investor Inquiry" : "General Inquiry";
+      const submissionPayload: Record<string, string> = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `${subjectPrefix} from ${values.name.trim()}`,
+        from_name: SITE_SOURCE,
+        name: values.name.trim(),
+        email: values.email.trim(),
+        project: SITE_SOURCE,
+        inquiry_type: formType === "investor" ? "Investor Inquiry" : "General Inquiry",
+        submitted_from: window.location.href,
+        message: values.message.trim(),
+      };
+
+      if (values.phone.trim()) {
+        submissionPayload.phone = values.phone.trim();
+      }
+
+      if (values.organization.trim()) {
+        submissionPayload.organization = values.organization.trim();
+      }
+
       const response = await fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `${subjectPrefix} from ${SITE_SOURCE}`,
-          from_name: SITE_SOURCE,
-          name: values.name.trim(),
-          email: values.email.trim(),
-          phone: values.phone.trim(),
-          organization: values.organization.trim(),
-          inquiry_type: formType === "investor" ? "Investor" : "General",
-          source: SITE_SOURCE,
-          message: values.message.trim(),
-        }),
+        body: JSON.stringify(submissionPayload),
       });
 
       const payload = (await response.json().catch(() => ({}))) as {
@@ -167,16 +182,17 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 max-w-lg w-full">
+    <form onSubmit={handleSubmit} className="space-y-5 max-w-lg w-full" aria-busy={submitting}>
       {variant === "page" && (
-        <div className="flex gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-6" role="group" aria-label="Inquiry type">
           <button
             type="button"
+            disabled={submitting}
             onClick={() => {
               setFormType("general");
               setSubmitted(false);
             }}
-            className={`font-label text-sm px-5 py-2 rounded-sm transition-colors ${
+            className={`font-label text-sm px-5 py-2 rounded-sm transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
               formType === "general"
                 ? "bg-primary text-primary-foreground hover:bg-buttered-rum hover:text-white"
                 : "bg-secondary text-foreground hover:bg-buttered-rum hover:text-white"
@@ -186,11 +202,12 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
           </button>
           <button
             type="button"
+            disabled={submitting}
             onClick={() => {
               setFormType("investor");
               setSubmitted(false);
             }}
-            className={`font-label text-sm px-5 py-2 rounded-sm transition-colors ${
+            className={`font-label text-sm px-5 py-2 rounded-sm transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
               formType === "investor"
                 ? "bg-primary text-primary-foreground hover:bg-buttered-rum hover:text-white"
                 : "bg-secondary text-foreground hover:bg-buttered-rum hover:text-white"
@@ -238,9 +255,13 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
                 placeholder="Your name"
                 className={inputClass}
                 value={values.name}
+                autoComplete="name"
+                maxLength={200}
+                aria-invalid={Boolean(errors.name)}
+                aria-describedby={errors.name ? `${idPrefix}-name-error` : undefined}
                 onChange={(e) => setFieldValue("name", e.target.value)}
               />
-              {errors.name ? <p className="mt-1 text-xs text-destructive">{errors.name}</p> : null}
+              {errors.name ? <p id={`${idPrefix}-name-error`} className="mt-1 text-xs text-destructive">{errors.name}</p> : null}
             </div>
             <div>
               <Label htmlFor={`${idPrefix}-email`} className={isFooter ? "text-primary-foreground/70" : ""}>Email *</Label>
@@ -252,9 +273,13 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
                 placeholder="you@email.com"
                 className={inputClass}
                 value={values.email}
+                autoComplete="email"
+                maxLength={320}
+                aria-invalid={Boolean(errors.email)}
+                aria-describedby={errors.email ? `${idPrefix}-email-error` : undefined}
                 onChange={(e) => setFieldValue("email", e.target.value)}
               />
-              {errors.email ? <p className="mt-1 text-xs text-destructive">{errors.email}</p> : null}
+              {errors.email ? <p id={`${idPrefix}-email-error`} className="mt-1 text-xs text-destructive">{errors.email}</p> : null}
             </div>
           </div>
 
@@ -268,8 +293,13 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
                 placeholder="Optional"
                 className={inputClass}
                 value={values.phone}
+                autoComplete="tel"
+                maxLength={30}
+                aria-invalid={Boolean(errors.phone)}
+                aria-describedby={errors.phone ? `${idPrefix}-phone-error` : undefined}
                 onChange={(e) => setFieldValue("phone", e.target.value)}
               />
+              {errors.phone ? <p id={`${idPrefix}-phone-error`} className="mt-1 text-xs text-destructive">{errors.phone}</p> : null}
             </div>
             <div>
               <Label htmlFor={`${idPrefix}-organization`} className={isFooter ? "text-primary-foreground/70" : ""}>Organization</Label>
@@ -279,8 +309,13 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
                 placeholder="Optional"
                 className={inputClass}
                 value={values.organization}
+                autoComplete="organization"
+                maxLength={200}
+                aria-invalid={Boolean(errors.organization)}
+                aria-describedby={errors.organization ? `${idPrefix}-organization-error` : undefined}
                 onChange={(e) => setFieldValue("organization", e.target.value)}
               />
+              {errors.organization ? <p id={`${idPrefix}-organization-error`} className="mt-1 text-xs text-destructive">{errors.organization}</p> : null}
             </div>
           </div>
 
@@ -293,9 +328,23 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
               placeholder={messagePlaceholder}
               className={`${inputClass} min-h-[100px]`}
               value={values.message}
+              maxLength={MAX_MESSAGE_LENGTH}
+              aria-invalid={Boolean(errors.message)}
+              aria-describedby={errors.message ? `${idPrefix}-message-error` : `${idPrefix}-message-help`}
               onChange={(e) => setFieldValue("message", e.target.value)}
             />
-            {errors.message ? <p className="mt-1 text-xs text-destructive">{errors.message}</p> : null}
+            <div className="mt-1 flex items-start justify-between gap-4">
+              {errors.message ? (
+                <p id={`${idPrefix}-message-error`} className="text-xs text-destructive">{errors.message}</p>
+              ) : (
+                <p id={`${idPrefix}-message-help`} className={`text-xs ${isFooter ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
+                  Include preferred unit type, travel dates, or investment questions if relevant.
+                </p>
+              )}
+              <p className={`shrink-0 text-xs ${isFooter ? "text-primary-foreground/50" : "text-muted-foreground"}`}>
+                {values.message.length}/{MAX_MESSAGE_LENGTH.toLocaleString()}
+              </p>
+            </div>
           </div>
 
           {/* Hidden honeypot field for bot detection */}
@@ -316,7 +365,17 @@ const InlineForm = ({ variant = "page", defaultType = "general" }: InlineFormPro
             disabled={submitting}
             className="text-sm tracking-wider px-8 py-3 h-auto border border-primary bg-primary text-primary-foreground hover:bg-buttered-rum hover:border-buttered-rum hover:text-white transition-all duration-300"
           >
-            {submitting ? "Sending…" : formType === "investor" ? "Request Investor Brief" : "Get Project Updates"}
+            {submitting ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                Sending...
+              </>
+            ) : (
+              <>
+                <Send className="h-4 w-4" aria-hidden="true" />
+                {formType === "investor" ? "Request Investor Brief" : "Get Project Updates"}
+              </>
+            )}
           </Button>
           {variant === "page" ? (
             <p className="font-body text-xs text-muted-foreground">
