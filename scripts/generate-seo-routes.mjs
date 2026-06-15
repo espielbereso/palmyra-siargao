@@ -28,8 +28,6 @@ const teamMembers = [
   ["lani", 'Laarni "Lani" De Leon', "Chief Administrative Officer"],
   ["mabel", "Mabel De Leon", "Chief Brokerage Relations Officer"],
   ["alain", "Alain De Leon", "Chief Security Officer"],
-  ["david", "David Moore", "Chief Security Officer"],
-  ["belle", "Marilou Belle Moore", "Chief Human Resources Officer"],
   ["ryan", "Ryan Catubig", "Principal Architect"],
   ["john", "John Lopo", "Certified Public Accountant"],
   ["torreon", "Atty. Israelito P. Torreon", "Legal Counsel"],
