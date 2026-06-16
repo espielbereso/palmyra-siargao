@@ -56,8 +56,9 @@ const unitTypes = [
   {
     type: "Presidential Suite",
     desc: "The signature residence offering the most generous sense of space, privacy, and resort-style comfort.",
-    fit: "Limited slots available",
-    note: "Limited slots",
+    fit: "Ideal for premium stays, families, and high-value rental positioning",
+    note: "Limited slots available",
+    featured: true,
   },
 ];
 
@@ -153,14 +154,14 @@ const Residences = () => {
       {/* ── Section 3: Unit Types ── */}
       <section className="py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-6 lg:px-12">
-          <ScrollReveal>
+          <ScrollReveal className="text-center">
             <p className="font-subhead text-xs uppercase tracking-widest text-buttered-rum mb-4">
               Unit Types
             </p>
-            <h2 className="text-3xl md:text-4xl leading-tight mb-6 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl leading-tight mb-6 max-w-3xl mx-auto">
               Homes for different rhythms of island living
             </h2>
-            <p className="font-body text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mb-14">
+            <p className="font-body text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-14">
               Every layout is planned for tropical ventilation, natural light, and practical flexibility, from compact units to the limited Presidential Suite.
             </p>
           </ScrollReveal>
@@ -168,21 +169,33 @@ const Residences = () => {
           <div className="grid md:grid-cols-2 auto-rows-fr gap-6">
             {unitTypes.map((unit, index) => (
               <ScrollReveal key={unit.type} delay={index * 0.06}>
-                <article className="h-full md:min-h-[290px] border border-buttered-rum/45 bg-white overflow-hidden">
+                <article
+                  className={`h-full md:min-h-[290px] overflow-hidden border ${
+                    unit.featured
+                      ? "bg-white border-2 border-buttered-rum"
+                      : "bg-white border-buttered-rum/45"
+                  }`}
+                >
                   <div className="flex h-full flex-col sm:flex-row">
-                    <div className="sm:w-2/5 min-h-[170px] sm:min-h-full border-b sm:border-b-0 sm:border-r border-foreground/10">
+                    <div
+                      className={`sm:w-2/5 min-h-[170px] sm:min-h-full border-b sm:border-b-0 sm:border-r ${
+                        unit.featured ? "border-buttered-rum/60" : "border-foreground/10"
+                      }`}
+                    >
                       <img src={unitImages[index]} alt={`${unit.type} interior`} className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div className="sm:w-3/5 p-5 md:p-6 flex flex-col justify-center">
-                      <p className="font-subhead text-xs uppercase tracking-widest text-buttered-rum mb-3">
-                        0{index + 1}
-                      </p>
-                      <h3 className="text-2xl leading-tight mb-3">{unit.type}</h3>
-                      {unit.note ? (
-                        <p className="font-label text-[10px] uppercase tracking-[0.14em] text-primary bg-buttered-rum/15 border border-buttered-rum/35 px-2.5 py-1 w-fit mb-3">
-                          {unit.note}
+                      <div className="flex flex-wrap items-center gap-3 mb-4">
+                        <p className="font-subhead text-xs uppercase tracking-widest text-buttered-rum">
+                          0{index + 1}
                         </p>
-                      ) : null}
+                        {unit.note ? (
+                          <p className="font-label text-[10px] uppercase tracking-[0.14em] text-buttered-rum border border-buttered-rum/50 bg-buttered-rum/10 px-2.5 py-1">
+                            {unit.note}
+                          </p>
+                        ) : null}
+                      </div>
+                      <h3 className="text-2xl leading-tight mb-3">{unit.type}</h3>
                       <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
                         {unit.desc}
                       </p>
