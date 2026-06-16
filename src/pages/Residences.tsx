@@ -20,7 +20,7 @@ const keyStats = [
   {
     value: "200+",
     label: "Residential units",
-    detail: "Studio to 2-bedroom",
+    detail: "Studio to Presidential Suite",
     icon: Building2,
   },
   {
@@ -40,23 +40,24 @@ const keyStats = [
 const unitTypes = [
   {
     type: "Studio",
-    desc: "Compact island living designed for efficiency, ease, and everyday light.",
+    desc: "Efficient island living with an easy, low-maintenance layout shaped for light, comfort, and everyday retreat.",
     fit: "Ideal for first-time owners and short-term stays",
   },
   {
-    type: "Junior 1-Bedroom",
-    desc: "A step up in flexibility with more room for focused work and rest.",
-    fit: "Ideal for remote professionals and long weekends",
+    type: "Bedroom 1",
+    desc: "A private one-bedroom residence with more room to settle in, unwind, and create a steady island rhythm.",
+    fit: "Ideal for couples, remote stays, and longer getaways",
   },
   {
-    type: "1-Bedroom",
-    desc: "Balanced comfort and privacy with a layout that supports daily rhythm.",
-    fit: "Ideal for couples and extended island living",
+    type: "Bedroom 2",
+    desc: "A spacious two-bedroom layout designed for family use, visiting guests, and flexible live-and-host living.",
+    fit: "Ideal for families and premium rental positioning",
   },
   {
-    type: "2-Bedroom",
-    desc: "Generous space for families, guests, or a dual live-and-host setup.",
-    fit: "Ideal for family use and premium rental positioning",
+    type: "Presidential Suite",
+    desc: "The signature residence offering the most generous sense of space, privacy, and resort-style comfort.",
+    fit: "Limited slots available",
+    note: "Limited slots",
   },
 ];
 
@@ -160,7 +161,7 @@ const Residences = () => {
               Homes for different rhythms of island living
             </h2>
             <p className="font-body text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mb-14">
-              Every layout is planned for tropical ventilation, natural light, and practical flexibility, from compact units to family-ready homes.
+              Every layout is planned for tropical ventilation, natural light, and practical flexibility, from compact units to the limited Presidential Suite.
             </p>
           </ScrollReveal>
 
@@ -177,6 +178,11 @@ const Residences = () => {
                         0{index + 1}
                       </p>
                       <h3 className="text-2xl leading-tight mb-3">{unit.type}</h3>
+                      {unit.note ? (
+                        <p className="font-label text-[10px] uppercase tracking-[0.14em] text-primary bg-buttered-rum/15 border border-buttered-rum/35 px-2.5 py-1 w-fit mb-3">
+                          {unit.note}
+                        </p>
+                      ) : null}
                       <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
                         {unit.desc}
                       </p>
@@ -189,6 +195,11 @@ const Residences = () => {
               </ScrollReveal>
             ))}
           </div>
+          <ScrollReveal delay={0.24}>
+            <p className="font-body text-xs text-muted-foreground/80 leading-relaxed mt-6 max-w-3xl">
+              All interior pictures are artist's stock ideas for visualization purposes only.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
