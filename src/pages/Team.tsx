@@ -2,31 +2,84 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import { getInitials, partnerCompanies, peopleGroups } from "@/content/aboutPeople";
-import type { LucideIcon } from "lucide-react";
-import { ArrowUpRight, Briefcase, Cog, Compass, Scale, Users } from "lucide-react";
+import type { Person } from "@/content/aboutPeople";
 import teamIntro from "@/assets/pages/team/team-intro.webp";
-import orgChartImage from "@/assets/pages/team/wdc-palmyra-org-chart.png";
+import palmyraWordmark from "@/assets/pages/team/palmyra-wordmark-buttered-rum.png";
 
 // Partner logo imports
-import logoWellbuild from "@/assets/pages/team/partners/wellbuild-logo.png";
 import logoRbcatubig from "@/assets/pages/team/partners/rbcatubig-architects-logo.png";
 import logoLopo from "@/assets/pages/team/partners/lopo-ortega-and-co-cpa-logo-horizontal.webp";
 import logoTorreonLaw from "@/assets/pages/team/partners/torreon-law-horizontal.webp";
-
-
-const groupIcons: Record<string, LucideIcon> = {
-  "WELLBUILD Leadership": Users,
-  "Design & Architecture": Compass,
-  "Engineering & Technical": Cog,
-  "Finance, Legal & Compliance": Scale,
-  "Project Delivery & Operations": Briefcase,
-};
+import logoWellbuildPartners from "@/assets/pages/team/partners/wellbuild-logo1-official.png";
+import logoWellbuildIncorporators from "@/assets/pages/team/partners/wellbuild-logo-official.png";
 
 const partnerLogoMap: Record<string, string> = {
-  "WELLBUILD Development Corporation": logoWellbuild,
+  "WELLBUILD Development Corporation": logoWellbuildPartners,
   "RBCatubig Architects": logoRbcatubig,
   "Lopo, Ortega and Co., CPA": logoLopo,
   "The Law Firm of Torreon and Partners": logoTorreonLaw,
+};
+
+const allPeople = peopleGroups.flatMap((group) => group.people);
+
+type TeamPerson = Person;
+
+const getPerson = (namePart: string): TeamPerson | undefined =>
+  allPeople.find((person) => person.name.toLowerCase().includes(namePart.toLowerCase()));
+
+const isPerson = (person: TeamPerson | undefined): person is TeamPerson => Boolean(person);
+
+const incorporatorChair = getPerson("Lynie");
+const incorporatorBoard = [getPerson("Deborah"), getPerson("Eglesciano"), getPerson("Mabel")].filter(isPerson);
+const incorporatorOfficers = [
+  getPerson("Laarni"),
+  getPerson("Jedfrey"),
+  getPerson("Aldrin"),
+  getPerson("Archimedes"),
+].filter(isPerson);
+const projectLead = getPerson("Torreon");
+const projectTeam = [
+  getPerson("Emilie"),
+  getPerson("John Michael"),
+  getPerson("Alain"),
+  getPerson("Peter"),
+].filter(isPerson);
+
+const TeamPersonCard = ({ person }: { person: TeamPerson }) => {
+  const card = (
+    <article className="group relative w-full max-w-[320px] border border-buttered-rum/70 bg-white p-2 shadow-[0_10px_28px_rgba(23,47,36,0.08)]">
+      <div className="aspect-[4/4.8] overflow-hidden bg-secondary">
+        {person.headshot ? (
+          <img
+            src={person.headshot}
+            alt={person.name}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center bg-primary text-3xl text-primary-foreground">
+            {getInitials(person.name)}
+          </div>
+        )}
+      </div>
+      <div className="px-2 pb-2 pt-3 text-center">
+        <h3 className="text-sm leading-tight md:text-base">{person.name}</h3>
+        <p className="mt-1 font-label text-[9px] uppercase leading-snug tracking-[0.08em] text-muted-foreground md:text-[10px]">
+          {person.role}
+        </p>
+      </div>
+    </article>
+  );
+
+  return person.slug ? (
+    <Link
+      to={`/team/${person.slug}`}
+      className="block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-buttered-rum focus-visible:ring-offset-4"
+      onClick={() => sessionStorage.setItem("teamScrollY", String(window.scrollY))}
+    >
+      {card}
+    </Link>
+  ) : card;
 };
 
 const Team = () => {
@@ -49,10 +102,6 @@ const Team = () => {
 
     return () => window.clearTimeout(timerId);
   }, [location.state]);
-
-  const handleProfileOpen = () => {
-    sessionStorage.setItem("teamScrollY", String(window.scrollY));
-  };
 
   return (
     <main className="pt-[88px]">
@@ -157,135 +206,82 @@ const Team = () => {
         </div>
       </section>
 
-      {/* Section 3: People */}
-      <section id="team-people" className="scroll-mt-40 py-24 lg:py-32 bg-background">
+      {/* Section 3: Brochure-inspired organization */}
+      <section id="team-people" className="scroll-mt-40 overflow-hidden bg-[#f8f7f4] py-24 lg:py-32">
         <div className="container mx-auto px-6 lg:px-12">
-          <ScrollReveal>
-            <p className="font-subhead text-xs uppercase tracking-widest text-buttered-rum mb-4">
-              People Involved
+          <ScrollReveal className="mx-auto max-w-3xl text-center">
+            <p className="font-subhead text-xs uppercase tracking-[0.2em] text-buttered-rum mb-4">
+              The People Behind the Vision
             </p>
-            <h2 className="text-3xl md:text-4xl leading-tight mb-6 max-w-3xl">
-              Team, Technical Experts, and Project Leaders
-            </h2>
-            <p className="font-body text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mb-16">
-              Every phase of PALMYRA Siargao is supported by specialists who ensure design quality, operational discipline, and long-term value.
+            <h2 className="text-4xl leading-tight md:text-5xl">Leadership and project development team</h2>
+            <p className="mt-6 font-body text-base leading-relaxed text-muted-foreground md:text-lg">
+              Meet the leaders, specialists, and partners bringing WELLBUILD Development Corporation and PALMYRA Siargao to life.
             </p>
           </ScrollReveal>
 
-          <div className="space-y-16">
-            {peopleGroups.map((group, groupIndex) => (
-              <div key={group.title}>
-                <ScrollReveal delay={groupIndex * 0.04}>
-                  <div className="flex items-center gap-3 mb-3">
-                    {(() => {
-                      const Icon = groupIcons[group.title] ?? Users;
-                      return <Icon className="h-5 w-5 shrink-0 text-buttered-rum" aria-hidden="true" />;
-                    })()}
-                    <h3 className="text-2xl md:text-3xl leading-tight">{group.title}</h3>
-                  </div>
-                  <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl mb-8">
-                    {group.description}
-                  </p>
+          <div className="mx-auto mt-20 max-w-7xl">
+            <ScrollReveal className="text-center">
+              <img
+                src={logoWellbuildIncorporators}
+                alt="WELLBUILD Development Corporation"
+                className="mx-auto h-auto w-full max-w-[360px] object-contain"
+              />
+              <h3 className="mt-8 text-2xl uppercase tracking-[0.12em] md:text-3xl">The Incorporators</h3>
+            </ScrollReveal>
+
+            {incorporatorChair && (
+              <ScrollReveal className="mt-8 flex justify-center">
+                <TeamPersonCard person={incorporatorChair} />
+              </ScrollReveal>
+            )}
+
+            <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-3 sm:gap-6 lg:gap-8">
+              {incorporatorBoard.map((person, index) => (
+                <ScrollReveal key={person.name} delay={index * 0.06}>
+                  <TeamPersonCard person={person} />
                 </ScrollReveal>
+              ))}
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6">
-                  {group.people.map((person, personIndex) => {
-                    const isClickable = Boolean(person.slug);
-                    const card = (
-                      <article className="group relative overflow-hidden rounded-sm border border-foreground/10 bg-foreground/5 aspect-[4/5]">
-                        {person.headshot ? (
-                          <img
-                            src={person.headshot}
-                            alt={person.name}
-                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 bg-primary/75 flex items-center justify-center">
-                            <span className="font-subhead text-3xl md:text-4xl text-primary-foreground/90">
-                              {getInitials(person.name)}
-                            </span>
-                          </div>
-                        )}
-                        {isClickable && (
-                          <ArrowUpRight
-                            className="absolute bottom-4 right-4 z-10 h-6 w-6 text-primary-foreground/95 transition-transform duration-300 group-hover:scale-110"
-                            aria-hidden="true"
-                          />
-                        )}
-                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/45 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
-                          <h4 className="font-subhead text-lg leading-tight text-primary-foreground mb-2">
-                            {person.name}
-                          </h4>
-                          <p className="font-label text-[11px] uppercase tracking-widest text-primary-foreground/85 max-w-[95%]">
-                            {person.role}
-                          </p>
-                        </div>
-                      </article>
-                    );
+            <div className="mx-auto mt-8 grid max-w-7xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+              {incorporatorOfficers.map((person, index) => (
+                <ScrollReveal key={person.name} delay={index * 0.06}>
+                  <TeamPersonCard person={person} />
+                </ScrollReveal>
+              ))}
+            </div>
 
-                    return (
-                      <ScrollReveal key={`${group.title}-${person.name}`} delay={personIndex * 0.03}>
-                        {person.slug ? (
-                          <Link
-                            to={`/team/${person.slug}`}
-                            className="block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-buttered-rum focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                            onClick={handleProfileOpen}
-                          >
-                            {card}
-                          </Link>
-                        ) : (
-                          card
-                        )}
-                      </ScrollReveal>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
+            <div className="mx-auto my-20 h-px max-w-5xl bg-buttered-rum/35" aria-hidden="true" />
+
+            <ScrollReveal className="text-center">
+              <img
+                src={palmyraWordmark}
+                alt="PALMYRA Siargao"
+                className="mx-auto mb-5 h-auto w-full max-w-[280px] object-contain"
+              />
+              <h3 className="text-2xl uppercase tracking-[0.1em] md:text-3xl">Project Development Team</h3>
+            </ScrollReveal>
+
+            {projectLead && (
+              <ScrollReveal className="mt-8 flex justify-center">
+                <TeamPersonCard person={projectLead} />
+              </ScrollReveal>
+            )}
+
+            <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+              {projectTeam.map((person, index) => (
+                <ScrollReveal key={`${person.name}-project`} delay={index * 0.06}>
+                  <TeamPersonCard person={person} />
+                </ScrollReveal>
+              ))}
+            </div>
+
+            <p className="mx-auto mt-12 max-w-2xl text-center font-label text-[11px] uppercase leading-relaxed tracking-[0.14em] text-muted-foreground">
+              Select a profile to learn more about each member's role and experience.
+            </p>
           </div>
         </div>
       </section>
-
-      {/* Section 4: Organizational Chart */}
-      {/* <section id="team-org-chart" className="mb-24 lg:mb-28 bg-background">
-        <div className="container mx-auto px-6 lg:px-12">
-          <ScrollReveal delay={0.1}>
-            <div className="text-center">
-              <div
-                className="mx-auto mb-12 h-px w-full max-w-4xl bg-gradient-to-r from-transparent via-foreground/20 to-transparent"
-                aria-hidden="true"
-              />
-              <p className="font-subhead text-xs uppercase tracking-widest text-buttered-rum mb-4">
-                Organizational Structure
-              </p>
-              <h4 className="text-2xl md:text-3xl leading-tight mb-6">
-                WELLBUILD x PALMYRA Siargao Organizational Chart
-              </h4>
-              <figure className="mx-auto max-w-6xl rounded-sm border border-foreground/15 bg-foreground/[0.03] overflow-hidden">
-                <a
-                  href={orgChartImage}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block"
-                  aria-label="Open organizational chart in full size"
-                >
-                  <img
-                    src={orgChartImage}
-                    alt="WELLBUILD Development Corporation x PALMYRA Siargao Resort and Residences organizational chart"
-                    className="w-full h-auto"
-                    loading="lazy"
-                  />
-                </a>
-              </figure>
-              <p className="mt-4 font-label text-[11px] uppercase tracking-widest text-muted-foreground">
-                Click image to view full size
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section> */}
 
 
       {/* Section 5: CTA */}
