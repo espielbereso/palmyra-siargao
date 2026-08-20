@@ -2,6 +2,15 @@ import { Link } from "react-router-dom";
 import logoIcon from "@/assets/shared/brand/logo-icon-gold.png";
 import logoText from "@/assets/shared/brand/logo-text.png";
 
+const socialLinks = [
+  { label: "Facebook", href: "https://www.facebook.com/palmyrasiargao", icon: "f" },
+  { label: "TikTok", href: "https://www.tiktok.com/@palmyra_siargao", icon: "♪" },
+  { label: "Instagram", href: "https://www.instagram.com/palmyra_siargao", icon: "◎" },
+  { label: "Threads", href: "https://www.threads.com/@palmyra_siargao", icon: "@" },
+  { label: "X", href: "https://x.com/palmyrasiargao", icon: "𝕏" },
+  { label: "YouTube", href: "https://youtube.com/@palmyrasiargao", icon: "▶" },
+];
+
 const Footer = () => (
   <footer className="bg-primary text-primary-foreground border-t border-background/20">
     <div className="container mx-auto px-6 py-16 lg:px-12">
@@ -14,6 +23,21 @@ const Footer = () => (
           <p className="font-body text-sm leading-relaxed opacity-80">
             A conscious island sanctuary on Siargao Island, Philippines.
           </p>
+          <div className="mt-6 flex items-center gap-2" aria-label="PALMYRA Siargao social media links">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`PALMYRA Siargao on ${social.label}`}
+                title={social.label}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-foreground/30 font-heading text-sm text-primary-foreground/80 transition-colors hover:border-buttered-rum hover:bg-buttered-rum hover:text-white"
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
         </div>
         <div>
           <h4 className="font-subhead text-xs uppercase tracking-widest mb-4 opacity-60">Explore</h4>

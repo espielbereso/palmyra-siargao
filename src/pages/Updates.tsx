@@ -176,7 +176,7 @@ const Updates = () => {
                       isCircleFilled(i) ? "bg-buttered-rum" : "bg-primary"
                     }`}
                   />
-                  <p className="font-heading text-2xl leading-none mb-3 text-primary-foreground/90">
+                  <p className="font-heading text-xl leading-tight mb-3 text-primary-foreground/90">
                     {item.date}
                   </p>
                   <p className="font-label text-[11px] uppercase tracking-[0.16em] text-[hsl(var(--buttered-rum-light))] mb-2">
@@ -202,7 +202,7 @@ const Updates = () => {
             {updatesContent.timeline.map((item, i) => (
               <article key={`${item.title}-${item.date}`} className="relative grid grid-cols-[1fr_auto_1fr] items-start py-10 lg:py-12">
                 <div className="pr-12 text-right">
-                  <p className="font-heading text-4xl lg:text-5xl leading-none text-primary-foreground/90">
+                  <p className="font-heading text-2xl lg:text-3xl leading-tight text-primary-foreground/90">
                     {item.date}
                   </p>
                 </div>
