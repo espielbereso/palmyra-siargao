@@ -90,7 +90,7 @@ export const peopleGroups: PeopleGroup[] = [
         slug: "lynie",
       },
       {
-        name: "Dr. Deborah Bereso, MD",
+        name: "Dr. Deborah Bereso, RMT, MD",
         role: "Vice Chairman",
         bio: "Physician and emerging business leader integrating healthcare insight with strategic leadership for PALMYRA Siargao.",
         fullBio:

@@ -3,6 +3,48 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import { updatesContent } from "@/content/updatesContent";
 
+type UpdateItem = (typeof updatesContent.timeline)[number];
+
+const UpdateAttachments = ({ item }: { item: UpdateItem }) => (
+  <>
+    {item.image ? (
+      <img
+        src={item.image}
+        alt={item.title}
+        className="mb-4 mt-5 max-h-72 w-full rounded-sm object-cover"
+        loading="lazy"
+      />
+    ) : null}
+
+    {item.video ? (
+      <video
+        className="mb-4 mt-5 max-h-72 w-full rounded-sm object-cover"
+        controls
+        preload="metadata"
+      >
+        <source src={item.video} type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
+    ) : null}
+
+    {item.links?.length ? (
+      <div className="mt-5 flex flex-wrap gap-3">
+        {item.links.map((link) => (
+          <a
+            key={`${item.title}-${link.url}`}
+            href={link.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center border border-primary-foreground/30 px-3 py-2 font-label text-[10px] uppercase tracking-widest text-primary-foreground/85 transition-colors hover:border-buttered-rum hover:text-buttered-rum"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    ) : null}
+  </>
+);
+
 const Updates = () => {
   const timelineTrackRef = useRef<HTMLDivElement | null>(null);
   const [timelineProgress, setTimelineProgress] = useState(0);
@@ -144,6 +186,7 @@ const Updates = () => {
                   <p className="font-body text-base text-primary-foreground/75 leading-relaxed">
                     {item.note}
                   </p>
+                  <UpdateAttachments item={item} />
                 </article>
               ))}
             </div>
@@ -180,6 +223,7 @@ const Updates = () => {
                   <p className="font-body text-lg text-primary-foreground/75 leading-relaxed max-w-xl">
                     {item.note}
                   </p>
+                  <UpdateAttachments item={item} />
                 </div>
               </article>
             ))}
